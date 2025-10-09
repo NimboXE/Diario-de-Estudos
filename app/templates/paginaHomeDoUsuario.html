@@ -1,0 +1,127 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diário de Estudos - Home do Usuário</title>
+    <link rel="stylesheet" href="{% static 'CSS/paginaHomeDoUsuarioCSS.css' %}">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <span class="logo">Diário de Estudos</span>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">📚</span>
+                    <span class="nav-text">Matérias</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-text">Anotações</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">✅</span>
+                    <span class="nav-text">Atividades</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-text">Perfil</span>
+                </a>
+            </nav>
+
+            <div class="user-section">
+                <div class="user-avatar">🌻</div>
+                <div class="user-info">
+                    <div class="user-name">{{request.user.nome}}</div>
+                    <div class="user-status">{{request.user.email}}</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <div>
+                    <h1 class="header-title">Dashboard</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="sunflower-mode-btn" onclick="toggleSunflowerMode()">
+                        <span>🌻</span>
+                        <span>Modo Girassol</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Girassol do Dia -->
+            <div class="daily-sunflower">
+                <div class="sunflower-icon">🌻</div>
+                <div class="sunflower-content">
+                    <h3>Girassol do Dia</h3>
+                    <p class="sunflower-quote">"O sucesso é a soma de pequenos esforços repetidos dia após dia."</p>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+
+                <!-- Atividades Pendentes -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span class="card-icon">✅</span>
+                            Atividades Pendentes
+                        </h2>
+                    </div>
+                    <div class="activity-list">
+                        {% for atividade in ativadades %}
+                            <div class="activity-item">
+                                <div class="activity-info">
+                                    <div class="activity-name">{{atividade.titulo}}</div>
+                                    <div class="activity-subject">{{atividade.materia_fk}}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Últimas Anotações -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span class="card-icon">📝</span>
+                            Últimas Anotações
+                        </h2>
+                    </div>
+                    <div class="notes-list">
+                        <div class="note-item">
+                            <div class="note-title">Funções Trigonométricas</div>
+                            <div class="note-preview">Revisão das principais funções: seno, cosseno e tangente. Lembrar de praticar...</div>
+                            <div class="note-date">Há 2 horas</div>
+                        </div>
+                        <div class="note-item">
+                            <div class="note-title">Tabela Periódica</div>
+                            <div class="note-preview">Grupos e períodos, propriedades dos elementos...</div>
+                            <div class="note-date">Ontem</div>
+                        </div>
+                        <div class="note-item">
+                            <div class="note-title">Romantismo Brasileiro</div>
+                            <div class="note-preview">Características principais, autores importantes...</div>
+                            <div class="note-date">Há 2 dias</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+<script src="{% static 'JavaScript/paginaHomeDoUsuarioScript.js' %}"></script>

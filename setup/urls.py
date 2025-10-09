@@ -21,7 +21,13 @@ from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
 
+## Importando as views para a adição nos URLs ##
+from app.views import *
+
 ## No fim do colchete, será implementado o caminho para os arquivos de mídia ##
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', paginaDeLogin, name='paginaDeLogin'),
+    path('paginaDeCadastro/', paginaDeCadastro, name='paginaDeCadastro'),
+    path('paginaHomeDoUsuario/', paginaHomeDoUsuario, name='paginaHomeDoUsuario'),
 ] + static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
