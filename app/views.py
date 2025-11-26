@@ -63,3 +63,26 @@ def paginaHomeDoUsuario(request):
     atividades = Atividade.objects.filter(usuario_fk=request.user)
 
     return render(request, 'paginaHomeDoUsuario.html', {'atividades':atividades})
+
+## Função para o logout do usuário ##
+@login_required(login_url=paginaDeLogin)
+def logoutOption(request):
+
+    logout(request)
+
+    return redirect(paginaDeLogin)
+
+## Pagina de matérias do usuário ##
+@login_required(login_url=paginaDeLogin)
+def paginaDeMaterias(request):
+    return render(request, 'paginaDeMateria.html')
+
+## Pagina de anotações do usuário ##
+@login_required(login_url=paginaDeLogin)
+def paginaDeAnotacoes(request):
+    return render(request, 'paginaDeAnotacoes.html')
+
+## Pagina de atividades do usuário ##
+@login_required(login_url=paginaDeLogin)
+def paginaDeAtividades(request):
+    return render(request, 'paginaDeAtividades.html')

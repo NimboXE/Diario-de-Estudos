@@ -23,6 +23,8 @@ class RelacionamentoUsuarioMaterias(models.Model):
 class Atividade(models.Model):
     titulo = models.CharField(max_length=50, null=False, blank=True)
     descricao = models.TextField(null=False, blank=False)
+    situacao = models.CharField(null=False, blank=False, default="Pendente")
+    data_de_entrega = models.DateField(null=False, blank=True)
     materia_fk = models.ForeignKey(Materia, on_delete=models.CASCADE)
     usuario_fk = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=False, blank=False)
 

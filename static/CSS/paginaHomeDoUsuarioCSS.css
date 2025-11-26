@@ -70,7 +70,7 @@ body::before {
 }
 
 .logo {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 800;
   background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
   -webkit-background-clip: text;
@@ -171,10 +171,14 @@ body::before {
   margin: 1rem;
   background: rgba(255, 215, 0, 0.1);
   border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.user-profile {
   display: flex;
   align-items: center;
   gap: 1rem;
-  transition: all 0.3s ease;
+  margin-bottom: 1rem;
 }
 
 .user-avatar {
@@ -209,6 +213,38 @@ body::before {
 .user-status {
   color: #888;
   font-size: 0.8rem;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 8px;
+  color: #dc2626;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  background: rgba(220, 38, 38, 0.2);
+  border-color: rgba(220, 38, 38, 0.5);
+  transform: translateY(-2px);
+}
+
+.sidebar.collapsed .logout-btn {
+  padding: 0.7rem;
+  font-size: 1.2rem;
+}
+
+.sidebar.collapsed .logout-btn .logout-text {
+  display: none;
 }
 
 /* Main Content */

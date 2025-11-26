@@ -1,18 +1,49 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diário de Estudos - Login</title>
+    <link rel="stylesheet" href="{% static 'CSS/paginaDeLogin.css' %}">
+    <link rel="shortcut icon" href="{% static 'Images/PageIcon/sunflower.ico' %}" type="image/x-icon">
 </head>
 <body>
-    <form action="{% url 'paginaDeLogin' %}" method="post">
-        {% csrf_token %}
-        <h2>Email:</h2> <input type="email" name="email">
-        <h2>Senha:</h2> <input type="password" name="senha">
-        <br>
-        <button type="submit">Entrar</button>
-    </form>
-    <a href="{% url 'paginaDeCadastro' %}"><button>Cadastrar</button></a>
+    <div class="sunflower-bg">🌻</div>
+    <div class="sunflower-bg">🌻</div>
+    <div class="sunflower-bg">🌻</div>
+
+    <div class="login-container">
+        <div class="logo-section">
+            <div class="logo-icon">🌻</div>
+            <h1 class="logo-title">Diário de Estudos</h1>
+            <p class="logo-subtitle">Bem-vindo de volta!</p>
+        </div>
+
+        <form action="{% url 'paginaDeLogin' %}" method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Entrar</button>
+        </form>
+
+        <div class="divider">ou</div>
+
+        <a href="{% url 'paginaDeCadastro' %}" class="btn-secondary">Criar nova conta</a>
+
+        <p class="footer-text">
+            "O sucesso é a soma de pequenos esforços repetidos dia após dia."
+        </p>
+    </div>
 </body>
 </html>
