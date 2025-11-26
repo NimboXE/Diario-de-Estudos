@@ -7,7 +7,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 
 ## Importando os modelos do banco de dados ##
-from app.models import Usuario, Materia, RelacionamentoUsuarioMaterias, Atividade, PlanoDeEstudos, Anotacao
+from app.models import Usuario, Materia, Atividade, PlanoDeEstudos, Anotacao
 
 # Create your views here.
 
@@ -75,14 +75,109 @@ def logoutOption(request):
 ## Pagina de matérias do usuário ##
 @login_required(login_url=paginaDeLogin)
 def paginaDeMaterias(request):
-    return render(request, 'paginaDeMateria.html')
+
+    materias = Materia.objects.filter(usuario=request.user)
+
+    return render(request, 'paginaDeMateria.html', {'materias':materias})
 
 ## Pagina de anotações do usuário ##
 @login_required(login_url=paginaDeLogin)
 def paginaDeAnotacoes(request):
-    return render(request, 'paginaDeAnotacoes.html')
+
+    anotacoes = Anotacao.objects.filter(usuario_fk=request.user)
+
+    return render(request, 'paginaDeAnotacoes.html', {'anotacoes':anotacoes})
 
 ## Pagina de atividades do usuário ##
 @login_required(login_url=paginaDeLogin)
 def paginaDeAtividades(request):
     return render(request, 'paginaDeAtividades.html')
+
+## Pagina de usuário ##
+@login_required(login_url=paginaDeLogin)
+def paginaDoUsuario(request):
+
+    quantidadeDeMaterias = Materia.objects.filter(usuario = request.user).count()
+    quantidadeDeAnotacoes = Anotacao.objects.filter(usuario_fk = request.user).count()
+    quantidadeDeAtividadesConcluidas = Atividade.objects.filter(usuario_fk = request.user, situacao = "Concluída").count()
+
+    if request.method == "POST":
+        
+        nome = request.POST.get("nome")
+        informacoes = request.POST.get("informacoes")
+
+        usuario = request.user
+
+        usuario.nome = nome
+        usuario.informacoes = informacoes
+
+        usuario.save()
+
+    return render(request, 'paginaDoUsuario.html', {'quantidadeDeMaterias':quantidadeDeMaterias, 'quantidadeDeAnotacoes':quantidadeDeAnotacoes, 'quantidadeDeAtividadesConcluidas':quantidadeDeAtividadesConcluidas})
+
+## Pagina de cadastro de matérias ##
+@login_required(login_url=paginaDeLogin)
+def paginaDeCadastroDeMateria(request):
+
+    if request.method == "POST":
+
+        nome = request.POST.get("nome")
+
+        Materia.objects.create(nome=nome, usuario=request.user)
+
+        return redirect(paginaDeMaterias)
+
+    return render(request, 'paginaDeCadastroDeMateria.html')
+
+## Pagina de cadastro de anotações ##
+@login_required(login_url=paginaDeLogin)
+def paginaDeCadastroDeAnotacoes(request):
+
+    if request.method == "POST":
+
+        titulo = request.POST.get("titulo")
+        descricao = request.POST.get("descricao")
+
+        Anotacao.objects.create(titulo=titulo, descricao=descricao, usuario_fk=request.user)
+
+        return redirect(paginaDeAnotacoes)
+
+    return render(request, 'paginaDeCadastroDeAnotacao.html')
+
+## Função para deletar uma matéria ##
+@login_required(login_url=paginaDeLogin)
+def deletarMateria(request, id):
+
+    materia = Materia.objects.get(id=id)
+    materia.delete()
+
+    return redirect(paginaDeMaterias)
+
+## Função para deletar uma anotação ##
+@login_required(login_url=paginaDeLogin)
+def deletarAnotacao(request, id):
+
+    anotacao = Anotacao.objects.get(id=id)
+    anotacao.delete()
+
+    return redirect(paginaDeAnotacoes)
+
+## Função para deletar uma anotação ##
+@login_required(login_url=paginaDeLogin)
+def paginaDeEdicaoDeAnotacao(request, id):
+
+    anotacao = Anotacao.objects.get(id=id)
+
+    if request.method == "POST":
+
+        titulo = request.POST.get("titulo")
+        descricao = request.POST.get("descricao")
+
+        anotacao.titulo = titulo
+        anotacao.descricao = descricao
+
+        anotacao.save()
+
+        return redirect(paginaDeAnotacoes)
+
+    return render(request, 'paginaDeEdicaoDeAnotacao.html', {'anotacao':anotacao})

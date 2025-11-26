@@ -7,17 +7,13 @@ from django.contrib.auth.models import AbstractUser
 
 ## Classe do usuário (Como ela herda do AsbtractUser, já contém username, email e password) ##
 class Usuario(AbstractUser):
-    nome = models.CharField(max_length=50, null=False, blank=False)
-    informacoes = models.TextField(null=False, blank=True)
+    nome = models.CharField(max_length=50, null=False, blank=False, editable=True)
+    informacoes = models.TextField(null=False, blank=True, editable=True)
 
 ## Classe das Matérias (Matemática, etc.) ##
 class Materia(models.Model):
-    nome = models.CharField(max_length=50, primary_key=True, null=False, blank=False)
-
-## Relacionamento entre Usuário e Matéria, permitindo a verificação entre as duas ##
-class RelacionamentoUsuarioMaterias(models.Model):
+    nome = models.CharField(max_length=50, null=False, blank=False)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=False, blank=False)
-    materia = models.ForeignKey(Materia, on_delete=models.CASCADE, null=False, blank=False)
 
 ## Classe para as atividades do usuario. Elas pertencem a um aluno e a uma matéria ##
 class Atividade(models.Model):

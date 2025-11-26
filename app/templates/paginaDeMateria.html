@@ -304,7 +304,6 @@ body::before {
   border: 2px solid transparent;
   position: relative;
   overflow: hidden;
-  cursor: pointer;
 }
 
 .subject-card::before {
@@ -382,6 +381,32 @@ body::before {
   font-size: 1.2rem;
   font-weight: 700;
   color: #ffd700;
+}
+
+/* Delete Button */
+.delete-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 40px;
+  height: 40px;
+  background: rgba(220, 38, 38, 0.1);
+  border: 2px solid rgba(220, 38, 38, 0.3);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: #dc2626;
+}
+
+.delete-btn:hover {
+  background: rgba(220, 38, 38, 0.2);
+  border-color: rgba(220, 38, 38, 0.6);
+  transform: scale(1.1);
 }
 
 /* Empty State */
@@ -474,7 +499,7 @@ body::before {
                     <span class="nav-icon">✅</span>
                     <span class="nav-text">Atividades</span>
                 </a>
-                <a href="#" class="nav-item">
+                <a href="{% url 'paginaDoUsuario' %}" class="nav-item">
                     <span class="nav-icon">👤</span>
                     <span class="nav-text">Perfil</span>
                 </a>
@@ -502,7 +527,7 @@ body::before {
                     <h1 class="header-title">Minhas Matérias</h1>
                 </div>
                 <div class="header-actions">
-                    <a href="#" class="add-subject-btn">
+                    <a href="{% url 'paginaDeCadastroDeMateria' %}" class="add-subject-btn">
                         <span>➕</span>
                         <span>Adicionar Matéria</span>
                     </a>
@@ -514,25 +539,21 @@ body::before {
                 {% if materias %}
                     {% for materia in materias %}
                     <div class="subject-card">
+                        <!-- Botão de Deletar -->
+                        <a href="{% url 'deletarMateria' materia.id %}" class="delete-btn" title="Excluir matéria">
+                            🗑️
+                        </a>
+                        
                         <div class="subject-header">
                             <div class="subject-icon">📚</div>
                             <div class="subject-info">
-                                <h3 class="subject-name">{{ materia.nome }}</h3>
-                                <p class="subject-description">{{ materia.descricao|default:"Sem descrição" }}</p>
+                              <h3 class="subject-name" style="margin: auto !important; font-size: 20px;">{{ materia.nome }}</h3>
                             </div>
                         </div>
                         <div class="subject-stats">
                             <div class="stat-item">
                                 <span class="stat-label">Atividades</span>
                                 <span class="stat-value">{{ materia.total_atividades|default:"0" }}</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">Anotações</span>
-                                <span class="stat-value">{{ materia.total_anotacoes|default:"0" }}</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">Progresso</span>
-                                <span class="stat-value">{{ materia.progresso|default:"0" }}%</span>
                             </div>
                         </div>
                     </div>
@@ -543,7 +564,7 @@ body::before {
                         <div class="empty-icon">📚</div>
                         <h2 class="empty-title">Nenhuma matéria cadastrada</h2>
                         <p class="empty-description">Comece adicionando sua primeira matéria para organizar seus estudos!</p>
-                        <a href="#" class="empty-action">
+                        <a href="{% url 'paginaDeCadastroDeMateria' %}" class="empty-action">
                             <span>➕</span>
                             <span>Adicionar Primeira Matéria</span>
                         </a>

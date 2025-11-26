@@ -495,7 +495,7 @@ body::before {
                     <span class="nav-icon">✅</span>
                     <span class="nav-text">Atividades</span>
                 </a>
-                <a href="#" class="nav-item">
+                <a href="{% url 'paginaDoUsuario' %}" class="nav-item">
                     <span class="nav-icon">👤</span>
                     <span class="nav-text">Perfil</span>
                 </a>
@@ -523,7 +523,7 @@ body::before {
                     <h1 class="header-title">Minhas Anotações</h1>
                 </div>
                 <div class="header-actions">
-                    <a href="#" class="add-note-btn">
+                    <a href="{% url 'paginaDeCadastroDeAnotacoes' %}" class="add-note-btn">
                         <span>➕</span>
                         <span>Nova Anotação</span>
                     </a>
@@ -542,16 +542,16 @@ body::before {
                             {% endif %}
                         </div>
                         <div class="note-content">
-                            {{ anotacao.conteudo }}
+                            {{ anotacao.descricao }}
                         </div>
                         <div class="note-footer">
                             <div class="note-date">
                                 <span>🕒</span>
-                                <span>{{ anotacao.data_criacao|default:"Hoje" }}</span>
+                                <span>{{ anotacao.hora_de_criacao}}</span>
                             </div>
                             <div class="note-actions">
-                                <button class="note-action-btn" title="Editar">✏️</button>
-                                <button class="note-action-btn" title="Excluir">🗑️</button>
+                                <button class="note-action-btn" title="Editar"><a href="{% url 'paginaDeEdicaoDeAnotacao' anotacao.id %}" style="text-decoration: none;">✏️</a></button>
+                                <button class="note-action-btn" title="Excluir"><a href="{% url 'deletarAnotacao' anotacao.id %}" style="text-decoration: none;">🗑️</a></button>
                             </div>
                         </div>
                     </div>
@@ -562,7 +562,7 @@ body::before {
                         <div class="empty-icon">📝</div>
                         <h2 class="empty-title">Nenhuma anotação encontrada</h2>
                         <p class="empty-description">Comece criando sua primeira anotação para registrar seus estudos!</p>
-                        <a href="#" class="empty-action">
+                        <a href="{% url 'paginaDeCadastroDeAnotacoes' %}" class="empty-action">
                             <span>➕</span>
                             <span>Criar Primeira Anotação</span>
                         </a>
